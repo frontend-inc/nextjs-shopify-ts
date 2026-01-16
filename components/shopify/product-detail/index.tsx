@@ -1,0 +1,211 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { useProduct, type Product } from '@/hooks/use-shopify-products';
+import { useCart } from '@/contexts/cart-context';
+import ProductDetailGallery from './product-detail-gallery';
+import ProductDetailInfo from './product-detail-info';
+import ProductRecommendations from './product-recommendations';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+
+interface ProductVariant {
+  id: string;
+  title: string;
+  price: {
+    amount: string;
+    currencyCode: string;
+  };
+  availableForSale: boolean;
+  selectedOptions: Array<{
+    name: string;
+    value: string;
+  }>;
+  image?: {
+    url: string;
+    altText?: string;
+  };
+}
+
+export type { Product };
+
+interface ProductDetailProps {
+  handle?: string;
+}
+
+const ProductDetail: React.FC<ProductDetailProps> = ({ handle: handleProp }) => {
+  const params = useParams();
+  const handle = handleProp || (params?.handle as string);
+  const { addItem, openCart } = useCart();
+
+  const { product, loading, error } = useProduct(handle);
+
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [addingToCart, setAddingToCart] = useState(false);
+
+  // Initialize variant when product loads
+  useEffect(() => {
+    if (product) {
+      const firstVariant = product.variants.edges[0]?.node;
+      if (firstVariant) {
+        setSelectedVariant(firstVariant);
+
+        const initialOptions: Record<string, string> = {};
+        firstVariant.selectedOptions.forEach((option: { name: string; value: string }) => {
+          initialOptions[option.name] = option.value;
+        });
+        setSelectedOptions(initialOptions);
+      }
+    }
+  }, [product]);
+
+  const handleOptionChange = (optionName: string, value: string) => {
+    const newOptions = { ...selectedOptions, [optionName]: value };
+    setSelectedOptions(newOptions);
+
+    // Find matching variant
+    const matchingVariant = product?.variants.edges.find(({ node }) => {
+      return node.selectedOptions.every(option =>
+        newOptions[option.name] === option.value
+      );
+    });
+
+    if (matchingVariant) {
+      setSelectedVariant(matchingVariant.node);
+
+      // Update image if variant has an associated image
+      if (matchingVariant.node.image && product) {
+        const variantImageUrl = matchingVariant.node.image.url;
+        const imageIndex = product.images.edges.findIndex(
+          edge => edge.node.url === variantImageUrl
+        );
+        if (imageIndex !== -1) {
+          setSelectedImageIndex(imageIndex);
+        }
+      }
+    }
+  };
+
+  const handleAddToCart = async () => {
+    if (!selectedVariant || !product) return;
+
+    try {
+      setAddingToCart(true);
+      await addItem(selectedVariant.id, quantity);
+      openCart();
+    } catch (err) {
+      console.error('Failed to add item to cart:', err);
+    } finally {
+      setAddingToCart(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Image Gallery Skeleton */}
+          <div>
+            <div className="aspect-square bg-gray-200 rounded-lg animate-pulse mb-4"></div>
+            <div className="grid grid-cols-4 gap-2">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="aspect-square bg-gray-200 rounded animate-pulse"></div>
+              ))}
+            </div>
+          </div>
+
+          {/* Product Info Skeleton */}
+          <div>
+            <div className="h-8 bg-gray-200 rounded mb-4 animate-pulse"></div>
+            <div className="h-6 bg-gray-200 rounded mb-6 w-1/3 animate-pulse"></div>
+            <div className="h-24 bg-gray-200 rounded mb-6 animate-pulse"></div>
+            <div className="h-12 bg-gray-200 rounded mb-4 animate-pulse"></div>
+            <div className="h-12 bg-gray-200 rounded animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <Alert variant="destructive" className="max-w-md mx-auto p-8">
+          <i className="ri-error-warning-line text-4xl"></i>
+          <AlertTitle className="text-lg font-semibold">
+            Product Not Found
+          </AlertTitle>
+          <AlertDescription className="mb-4">
+            {error || 'The requested product could not be found.'}
+          </AlertDescription>
+          <Button
+            onClick={() => window.history.back()}
+            variant="destructive"
+          >
+            Go Back
+          </Button>
+        </Alert>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 py-8">
+        <Breadcrumb className="mb-6">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/shop">Shop</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{product.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <ProductDetailGallery
+            images={product.images.edges.map(edge => edge.node)}
+            selectedImageIndex={selectedImageIndex}
+            onImageSelect={setSelectedImageIndex}
+          />
+          <ProductDetailInfo
+            product={product}
+            selectedVariant={selectedVariant}
+            selectedOptions={selectedOptions}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            handleAddToCart={handleAddToCart}
+            onOptionChange={handleOptionChange}
+            loading={addingToCart}
+          />
+        </div>
+      </div>
+
+      <ProductRecommendations productId={product.id} />
+    </div>
+  );
+};
+
+export default ProductDetail;
