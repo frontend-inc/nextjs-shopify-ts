@@ -25,7 +25,7 @@ const CartIcon: React.FC = () => {
 const Header: React.FC = () => {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-30 h-14">
-      <div className="max-w-6xl mx-auto px-4 h-full">
+      <div className="container mx-auto px-4 h-full">
         <div className="flex justify-between items-center h-full">
           {/* Logo */}
           <Link href="/" className="text-lg font-bold text-black font-heading">
