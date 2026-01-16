@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { ShopifyProvider } from '@/contexts/cart-context';
+import { ShopifyProvider } from '@/contexts/shopify-context';
 import ShopifyCart from '@/components/shopify/cart-drawer';
 import ShopHeader from '@/components/shopify/shop-header';
 import ShopFooter from '@/components/shopify/shop-footer';

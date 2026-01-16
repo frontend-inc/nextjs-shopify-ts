@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useCart } from '@/contexts/cart-context';
-import { redirectToCheckout } from '@/hooks/use-shopify-cart';
+import { useShopifyCart, redirectToCheckout } from '@/hooks/use-shopify-cart';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import {
@@ -15,7 +14,7 @@ import {
 } from '@/components/ui/sheet';
 
 const CartDrawer: React.FC = () => {
-  const { isOpen, closeCart, items, itemCount, totalAmount, checkoutUrl, loading, removeItem, updateItemQuantity } = useCart();
+  const { isOpen, closeCart, items, itemCount, totalAmount, checkoutUrl, loading, removeItem, updateItemQuantity } = useShopifyCart();
 
   const handleCheckout = () => {
     if (checkoutUrl) {

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useProduct, type Product } from '@/hooks/use-shopify-products';
-import { useCart } from '@/contexts/cart-context';
+import { useShopifyCart } from '@/hooks/use-shopify-cart';
 import ProductDetailGallery from '@/components/shopify/product-detail/product-detail-gallery';
 import ProductDetailInfo from '@/components/shopify/product-detail/product-detail-info';
 import ProductRecommendations from '@/components/shopify/product-detail/product-recommendations';
@@ -40,7 +40,7 @@ interface ProductVariant {
 export default function ProductDetailPage() {
   const params = useParams();
   const handle = params.handle as string;
-  const { addItem, openCart } = useCart();
+  const { addItem, openCart } = useShopifyCart();
 
   const { product, loading, error } = useProduct(handle);
 

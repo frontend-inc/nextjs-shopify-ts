@@ -83,17 +83,7 @@ interface CartContextType {
   refreshCart: () => Promise<void>;
 }
 
-const CartContext = createContext<CartContextType | null>(null);
-
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('useCart must be used within a ShopifyProvider');
-  }
-  return context;
-};
-
-export const useCartDrawer = useCart;
+export const CartContext = createContext<CartContextType | null>(null);
 
 export const ShopifyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);

@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useCart } from '@/contexts/cart-context';
+import { useShopifyCart } from '@/hooks/use-shopify-cart';
 
 const CartIcon: React.FC = () => {
-  const { toggleCart, itemCount } = useCart();
+  const { toggleCart, itemCount } = useShopifyCart();
 
   return (
     <button

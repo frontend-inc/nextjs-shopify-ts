@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { useCart } from '@/contexts/cart-context';
-import { addCartLines } from '@/hooks/use-shopify-cart';
+import { useShopifyCart, addCartLines } from '@/hooks/use-shopify-cart';
 import { truncate } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -53,7 +52,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
-  const { cartId, openCart } = useCart();
+  const { cartId, openCart } = useShopifyCart();
 
   const firstImage = product.images.edges[0]?.node;
   const price = product.priceRange.minVariantPrice;

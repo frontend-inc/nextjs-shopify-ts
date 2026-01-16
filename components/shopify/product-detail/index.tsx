@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useProduct, type Product } from '@/hooks/use-shopify-products';
-import { useCart } from '@/contexts/cart-context';
+import { useShopifyCart } from '@/hooks/use-shopify-cart';
 import ProductDetailGallery from './product-detail-gallery';
 import ProductDetailInfo from './product-detail-info';
 import ProductRecommendations from './product-recommendations';
@@ -46,7 +46,7 @@ interface ProductDetailProps {
 const ProductDetail: React.FC<ProductDetailProps> = ({ handle: handleProp }) => {
   const params = useParams();
   const handle = handleProp || (params?.handle as string);
-  const { addItem, openCart } = useCart();
+  const { addItem, openCart } = useShopifyCart();
 
   const { product, loading, error } = useProduct(handle);
 

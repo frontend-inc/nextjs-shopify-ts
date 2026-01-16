@@ -1,6 +1,8 @@
 'use client';
 
+import { useContext } from 'react';
 import { shopifyFetch, SHOPIFY_STORE_DOMAIN } from '@/services/shopify/client';
+import { CartContext } from '@/contexts/shopify-context';
 import {
   CREATE_CART_MUTATION,
   ADD_CART_LINES_MUTATION,
@@ -152,3 +154,12 @@ export function redirectToCheckout(checkoutUrl: string): void {
     window.location.href = checkoutUrl;
   }
 }
+
+// Hook to access cart context
+export const useShopifyCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useShopifyCart must be used within a ShopifyProvider');
+  }
+  return context;
+};
