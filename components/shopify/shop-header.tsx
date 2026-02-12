@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useShopifyCart } from '@/hooks/use-shopify-cart';
+import config from '@/lib/config.json';
 import { RiShoppingCartLine } from '@remixicon/react';
 
 const CartIcon: React.FC = () => {
@@ -30,7 +31,15 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-full">
           {/* Logo */}
           <Link href="/" className="text-lg font-bold text-black font-heading">
-            Store
+            {config.brand.logo.url ? (
+              <img
+                src={config.brand.logo.url}
+                alt={config.brand.logo.alt || 'Store'}
+                className="h-8"
+              />
+            ) : (
+              'Store'
+            )}
           </Link>
 
           {/* Navigation Links */}
