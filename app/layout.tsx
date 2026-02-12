@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Frontend',
-  description: 'Start prompting',
+  title: 'Frontend | Shopify',
+  description: 'Frontend Shopify storefront',
 };
 
 export default function RootLayout({
