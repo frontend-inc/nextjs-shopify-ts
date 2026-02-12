@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { RiImageLine } from '@remixicon/react';
 
 interface ProductImage {
   url: string;
@@ -32,7 +33,7 @@ const ProductDetailGallery: React.FC<ProductDetailGalleryProps> = ({
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-gray-400">
-            <i className="ri-image-line text-6xl"></i>
+            <RiImageLine size={60} />
           </div>
         )}
       </div>

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import ProductCard from './product-card';
 import { getProducts } from '@/hooks/use-shopify-products';
@@ -192,7 +194,7 @@ const Products: React.FC<ProductsProps> = ({
   }
 
   return (
-    <div className="py-16 bg-gray-50">
+    <div className="py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-5xl font-bold text-center mb-16 text-gray-900 font-heading">
           {title}

@@ -9,7 +9,7 @@ const Collections: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="py-16 bg-gray-50">
+      <div className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold text-center mb-16 text-gray-900 font-heading">
             Our Collections
@@ -35,7 +35,7 @@ const Collections: React.FC = () => {
 
   if (error) {
     return (
-      <div className="py-16 bg-gray-50">
+      <div className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl font-bold mb-8 font-heading">
             Our Collections
@@ -63,7 +63,7 @@ const Collections: React.FC = () => {
 
   if (collections.length === 0) {
     return (
-      <div className="py-16 bg-gray-50">
+      <div className="py-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl font-bold mb-8 font-heading">
             Our Collections
@@ -84,7 +84,7 @@ const Collections: React.FC = () => {
   }
 
   return (
-    <div className="py-16 bg-gray-50">
+    <div className="py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-5xl font-bold text-center mb-16 text-gray-900 font-heading">
           Our Collections

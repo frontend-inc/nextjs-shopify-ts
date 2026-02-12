@@ -3,6 +3,13 @@ import { Product, ProductVariant } from './index.tsx';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Spinner } from '@/components/ui/spinner';
+import {
+  RiSubtractLine,
+  RiAddLine,
+  RiTruckLine,
+  RiArrowGoBackLine,
+  RiSecurePaymentLine,
+} from '@remixicon/react';
 
 interface ProductDetailInfoProps {
   product: Product;
@@ -102,7 +109,7 @@ const ProductDetailInfo: React.FC<ProductDetailInfoProps> = ({
             size="icon-sm"
             disabled={quantity <= 1}
           >
-            <i className="ri-subtract-line"></i>
+            <RiSubtractLine size={16} />
           </Button>
           <span className="w-10 text-center font-semibold">{quantity}</span>
           <Button
@@ -110,7 +117,7 @@ const ProductDetailInfo: React.FC<ProductDetailInfoProps> = ({
             variant="ghost"
             size="icon-sm"
           >
-            <i className="ri-add-line"></i>
+            <RiAddLine size={16} />
           </Button>
         </div>
       </div>
@@ -138,15 +145,15 @@ const ProductDetailInfo: React.FC<ProductDetailInfoProps> = ({
       <div className="mt-8 pt-8 border-t border-gray-200">
         <div className="space-y-3 text-sm text-gray-600">
           <div className="flex items-center space-x-2">
-            <i className="ri-truck-line"></i>
+            <RiTruckLine size={16} />
             <span>Free shipping on orders over $100</span>
           </div>
           <div className="flex items-center space-x-2">
-            <i className="ri-arrow-go-back-line"></i>
+            <RiArrowGoBackLine size={16} />
             <span>30-day return policy</span>
           </div>
           <div className="flex items-center space-x-2">
-            <i className="ri-secure-payment-line"></i>
+            <RiSecurePaymentLine size={16} />
             <span>Secure payment</span>
           </div>
         </div>

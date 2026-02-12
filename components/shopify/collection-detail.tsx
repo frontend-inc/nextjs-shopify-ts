@@ -18,7 +18,7 @@ const CollectionDetail: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="py-16 bg-gray-50">
+      <div className="pt-4 pb-16">
         <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold text-center mb-16 text-gray-900 font-heading">
             {formattedTitle}
@@ -45,7 +45,7 @@ const CollectionDetail: React.FC = () => {
 
   if (error) {
     return (
-      <div className="py-16 bg-gray-50">
+      <div className="pt-4 pb-16">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl font-bold mb-8 font-heading">
             {formattedTitle}
@@ -75,7 +75,7 @@ const CollectionDetail: React.FC = () => {
   const title = collection?.title || formattedTitle;
 
   return (
-    <div className="py-16 bg-gray-50">
+    <div className="pt-4 pb-16">
       <div className="container mx-auto px-4">
         <h2 className="text-5xl font-bold text-center mb-16 text-gray-900 font-heading">
           {title}

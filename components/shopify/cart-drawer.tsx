@@ -3,15 +3,20 @@
 import React from 'react';
 import { useShopifyCart, redirectToCheckout } from '@/hooks/use-shopify-cart';
 import { Button } from '@/components/ui/button';
+import { Empty, EmptyHeader, EmptyTitle, EmptyDescription } from '@/components/ui/empty';
 import { Spinner } from '@/components/ui/spinner';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetBody,
-  AnimatePresence,
 } from '@/components/ui/sheet';
+import {
+  RiCloseLine,
+  RiImageLine,
+  RiSubtractLine,
+  RiAddLine,
+} from '@remixicon/react';
 
 const CartDrawer: React.FC = () => {
   const { isOpen, closeCart, items, itemCount, totalAmount, checkoutUrl, loading, removeItem, updateItemQuantity } = useShopifyCart();
@@ -31,10 +36,8 @@ const CartDrawer: React.FC = () => {
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={(open) => !open && closeCart()} side="right">
-      <AnimatePresence>
-        {isOpen && (
-          <SheetContent className="w-full max-w-md" showCloseButton={false}>
+    <Sheet open={isOpen} onOpenChange={(open) => !open && closeCart()}>
+          <SheetContent className="w-full max-w-md" side="right" showCloseButton={false}>
             {/* Header */}
             <SheetHeader className="h-14 min-h-0 px-4 py-3 flex items-center">
               <div className="flex items-center justify-between w-full">
@@ -46,29 +49,27 @@ const CartDrawer: React.FC = () => {
                   variant="ghost"
                   size="icon-sm"
                 >
-                  <i className="ri-close-line text-xl"></i>
+                  <RiCloseLine size={20} />
                 </Button>
               </div>
             </SheetHeader>
 
             {/* Cart Items */}
-            <SheetBody>
+            <div className="flex-1 overflow-y-auto p-4">
               {loading && items.length === 0 ? (
                 <div className="flex items-center justify-center py-12">
                   <Spinner size="lg" />
                 </div>
               ) : items.length === 0 ? (
-                <div className="text-center py-12">
-                  <i className="ri-shopping-cart-line text-6xl text-gray-300 mb-4 block"></i>
-                  <h3 className="text-lg font-semibold text-gray-600 mb-2">Your cart is empty</h3>
-                  <p className="text-gray-500 mb-6">Add some products to get started!</p>
-                  <Button
-                    onClick={closeCart}
-                    className="font-heading"
-                  >
+                <Empty className="py-12">
+                  <EmptyHeader>
+                    <EmptyTitle>Your cart is empty</EmptyTitle>
+                    <EmptyDescription>Add some products to get started!</EmptyDescription>
+                  </EmptyHeader>
+                  <Button onClick={closeCart}>
                     Continue Shopping
                   </Button>
-                </div>
+                </Empty>
               ) : (
                 <div className="space-y-6">
                   {items.map((item) => {
@@ -87,7 +88,7 @@ const CartDrawer: React.FC = () => {
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-gray-400">
-                              <i className="ri-image-line text-2xl"></i>
+                              <RiImageLine size={24} />
                             </div>
                           )}
                         </div>
@@ -120,7 +121,7 @@ const CartDrawer: React.FC = () => {
                                 disabled={item.quantity <= 1 || loading}
                                 className="h-7 w-7"
                               >
-                                <i className="ri-subtract-line text-sm"></i>
+                                <RiSubtractLine size={14} />
                               </Button>
                               <span className="px-2 py-1 font-semibold min-w-[30px] text-center text-sm">
                                 {item.quantity}
@@ -132,7 +133,7 @@ const CartDrawer: React.FC = () => {
                                 disabled={loading}
                                 className="h-7 w-7"
                               >
-                                <i className="ri-add-line text-sm"></i>
+                                <RiAddLine size={14} />
                               </Button>
                             </div>
                           </div>
@@ -154,7 +155,7 @@ const CartDrawer: React.FC = () => {
                             disabled={loading}
                             className="text-gray-400 hover:text-red-500"
                           >
-                            <i className="ri-close-line text-lg font-bold"></i>
+                            <RiCloseLine size={18} />
                           </Button>
                         </div>
                       </div>
@@ -162,7 +163,7 @@ const CartDrawer: React.FC = () => {
                   })}
                 </div>
               )}
-            </SheetBody>
+            </div>
 
             {/* Footer - Checkout Section */}
             {items.length > 0 && (
@@ -208,8 +209,6 @@ const CartDrawer: React.FC = () => {
               </div>
             )}
           </SheetContent>
-        )}
-      </AnimatePresence>
     </Sheet>
   );
 };

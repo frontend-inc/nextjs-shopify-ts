@@ -21,7 +21,7 @@ interface CollectionCardProps {
 
 const CollectionCard: React.FC<CollectionCardProps> = ({ collection }) => {
   return (
-    <Link href={`/shop/collections/${collection.handle}`} className="block group">
+    <Link href={`/collections/${collection.handle}`} className="block group">
       <Card className="hover:shadow-xl transition-shadow duration-300 overflow-hidden py-0 gap-0">
         {/* Collection Image */}
         <div className="aspect-video overflow-hidden bg-gray-100">

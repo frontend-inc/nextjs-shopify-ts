@@ -10,6 +10,7 @@ import ProductDetailInfo from './product-detail-info';
 import ProductRecommendations from './product-recommendations';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { RiErrorWarningLine } from '@remixicon/react';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -144,7 +145,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ handle: handleProp }) => 
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <Alert variant="destructive" className="max-w-md mx-auto p-8">
-          <i className="ri-error-warning-line text-4xl"></i>
+          <RiErrorWarningLine size={36} />
           <AlertTitle className="text-lg font-semibold">
             Product Not Found
           </AlertTitle>
