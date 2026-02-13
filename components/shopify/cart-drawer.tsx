@@ -20,6 +20,13 @@ import {
 
 const CartDrawer: React.FC = () => {
   const { isOpen, closeCart, items, itemCount, totalAmount, checkoutUrl, loading, removeItem, updateItemQuantity } = useShopifyCart();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   const handleCheckout = () => {
     if (checkoutUrl) {
