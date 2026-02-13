@@ -1,6 +1,10 @@
 @import 'tailwindcss';
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+
   /* Background and foreground */
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(222.2 84% 4.9%);
@@ -55,8 +59,9 @@
   --radius-xl: 0.75rem;
 
   /* Fonts */
-  --font-heading: "Space Grotesk", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
 }
 
 /* Dark mode */
@@ -88,4 +93,13 @@
   --color-sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --color-sidebar-border: hsl(240 3.7% 15.9%);
   --color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+/* Set border color for all elements */
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  border-color: var(--color-border);
 }

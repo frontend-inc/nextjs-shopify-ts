@@ -91,7 +91,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
       {/* Product Image */}
       <div className="aspect-square overflow-hidden bg-gray-100 relative">
         {firstImage ? (
-          <Link href={`/products/${product.handle}`}>
+          <Link href={`/shop/products/${product.handle}`}>
             <img
               src={firstImage.url}
               alt={firstImage.altText || product.title}
@@ -126,7 +126,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
         </div>
 
         {/* View Details Button */}
-        <Link href={`/products/${product.handle}`}>
+        <Link href={`/shop/products/${product.handle}`}>
           <Button className="w-full" size="sm">
             View Details
           </Button>

@@ -1,12 +1,12 @@
 {
-  "name": "nextjs-app",
+  "name": "nextjs-lite",
+  "version": "0.1.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.35",
@@ -49,7 +49,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.1.0",    
     "drizzle-orm": "^0.45.1",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^12.0.0",
